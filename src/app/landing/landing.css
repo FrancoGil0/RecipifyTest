@@ -1,0 +1,24 @@
+.fondo-landing{
+    background-image: url('../../../public/images/fondoVerde.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.fondo-transparente{
+    background: rgba(255, 255, 255, 0.807);
+}
+.fondo-transparente-verde-boton{
+    background: rgba(14, 199, 100, 0.807);
+}
+.fondo-transparente-verde{
+    background: rgba(0, 255, 119, 0.334);
+}
+
+.colorLogo{
+    color: red;
+}
+
+.font-title{
+    font-family: var(--font-title);
+  }
+  

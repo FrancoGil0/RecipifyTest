@@ -1,0 +1,10 @@
+:root{
+    --color-primario: #A9E673;
+    --color-primario-oscurencio: #77e673;
+    --color-primario-transparente: #a9e67381;
+    --color-secundario:#49B9A5; 
+    --color-botones-alter:#027179;
+    --color-botones:#0ba85e;
+    --color-fondo-ingredientes:#7ca854;
+    --blanco-mate:rgba(212, 211, 211, 0.775); /*Fondo App*/
+}

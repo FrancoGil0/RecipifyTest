@@ -1,0 +1,13 @@
+.fondo-homepage{
+    background-image: url('../../public/images/homebg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.bg-transparente{
+    background:  #ffffffb9;
+}
+.bg-transparente2{
+    background:  #ffffffe1;
+}
