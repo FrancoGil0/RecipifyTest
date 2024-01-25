@@ -82,6 +82,7 @@ class RecipeServices {
         photo: photo,
         description:description as string,
         pasos: pasos,
+        rating:0,
         ingredients: ingredients,
         categoria: { connect: { id: numberCategoria } },
         author: { connect: { id: numberAuthor } }

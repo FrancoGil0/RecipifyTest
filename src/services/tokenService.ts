@@ -5,7 +5,7 @@ import { randomUUID } from "crypto";
 import { Resend } from "resend/build/src/resend";
 
 class TokenService {
-    resend = new Resend(process.env.API_KEY);
+    resend = new Resend(process.env.API_KEY_RESEND);
 
     async crearToken(user:User){
       const token = await prisma.passwordResetToken.create({
