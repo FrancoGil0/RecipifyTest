@@ -3,7 +3,7 @@ import recipifyLogo from '../../../public/images/navbar-icon-black.svg'
 import Image from 'next/image'
 import { titleFont } from '../layout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRightToBracket, faBook, faBookAtlas, faBookOpen, faBrain, faSearch, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRightToBracket, faAtlas, faBook, faBrain, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 const LandingPage = () => {
 
@@ -20,26 +20,18 @@ const LandingPage = () => {
                 <div className={'cursor-pointer rounded-2xl sm:hidden fondo-transparente-verde-boton text-white text-center h-[60px] w-[300px] m-auto mt-5 p-3 ' + titleFont.className}>
                     <span className='text-[25px]'>Registrate Ahora</span> <FontAwesomeIcon className='ml-4 text-[25px]' icon={faArrowRightToBracket} />
                 </div>
-                <div className={`flex flex-col sm:flex-row gap-5 p-3 text-zinc-900 fondo-transparente-verde mt-5 rounded-xl shadow-xl text-lg sm:text-xl h-[300px]`}>
-                    <div className='w-full sm:w-1/4 p-3 rounded-xl gap-3 flex flex-col text-center  '>
-                        <h3 className={'text-3xl ' + titleFont.className}> Recetas <br /> para todos los gustos</h3>
-                        <h3 className={'text-3xl ' + titleFont.className}>Búsqueda Fácil y Rápida</h3>
-                        <h3 className={'text-3xl ' + titleFont.className}>Guardá Favoritos</h3>
-                        <h3 className={'text-3xl ' + titleFont.className}>Compartí tu creatividad</h3>                        
+                <div className={`flex flex-col p-3 text-zinc-900 fondo-transparente-verde mt-5 rounded-xl shadow-xl text-lg sm:text-xl h-[300px] `}>
+                    <div className='w-full  rounded-xl flex mx-auto items-center h-1/2'>
+                        <div className={'text-3xl w-1/4 text-center ' + titleFont.className}>Búsqueda Fácil y Rápida</div>
+                        <div className={'text-3xl w-1/4 text-center ' + titleFont.className}> Recetas para todos los gustos</div>
+                        <div className={'text-3xl w-1/4 text-center ' + titleFont.className}>Guardá Favoritos</div>
+                        <div className={'text-3xl w-1/4 text-center ' + titleFont.className}>Compartí tu creatividad</div>                        
                     </div>
-                    <div className='w-full sm:w-1/4 p-3 rounded-lg  gap-3 flex flex-col text-center '>
-
-                        <div className='h-[200px] '>
-                        </div>
-
-                    </div>
-                    <div className='w-full sm:w-1/4 p-3 rounded-lg  gap-3 flex flex-col text-center'>
-                        <div className='h-[200px] '>
-
-                        </div>
-
-                    </div>
-                    <div className='w-full sm:w-1/4 p-3 rounded-lg gap-3 flex flex-col text-center '>
+                    <div className='w-full  text-white rounded-xl flex mx-auto items-center h-1/2'>
+                    <FontAwesomeIcon className='ml-4 text-[60px] w-1/4' icon={faSearch} />
+                    <FontAwesomeIcon className='ml-4 text-[60px] w-1/4' icon={faAtlas} />
+                    <FontAwesomeIcon className='ml-4 text-[60px] w-1/4' icon={faBook} />
+                    <FontAwesomeIcon className='ml-4 text-[60px] w-1/4' icon={faBrain} />
                     </div>
                 </div>
                 <div className={'border-[2px] border-black cursor-pointer rounded-2xl hidden sm:block fondo-transparente-verde-boton text-neutral-100 text-center h-[80px] w-[450px] m-auto mt-20 p-3 shadow-md shadow-[#333333D9] transition-all hover:scale-110 hover:translate-y-[-10px] ' + titleFont.className}>
