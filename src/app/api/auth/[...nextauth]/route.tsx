@@ -1,7 +1,7 @@
-import NextAuth from "next-auth/next";
+import NextAuth, {AuthOptions}  from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const handler= NextAuth({
+export const authOptions:AuthOptions={
   providers: [
 //se ejecutan varias veces no una sola vez en cada petición lo llama
     CredentialsProvider({
@@ -34,7 +34,8 @@ const handler= NextAuth({
             // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
           }
         }
-      })
+      }
+      )
   ],
 //tendremos un objeto en la devolución de la llamada se ejecuta a medida que se va ////
 //estableciendo la cookie en el navegador
@@ -56,6 +57,9 @@ const handler= NextAuth({
   pages:{
     signIn: "/api/login/signin"
   }
-})
+}
+
+
+const handler= NextAuth(authOptions)
 //obtendremos solicitudes get y post
 export {handler as GET, handler as POST}

@@ -3,7 +3,7 @@ import { IUserInfo } from "@/interfaces/userInterfaces";
 import prisma from '@/libs/prisma'
 import { compare } from 'bcryptjs';
 import { hash } from 'bcryptjs';
-import { NextResponse } from "next/server";
+
 
 class UserServices {
    async compararPassword(password:string, repeatPassword?:string){
@@ -213,6 +213,33 @@ async getPhoto(idUser:number){
         
         //Si el usuario existe y la pass matchea, devuelve true :D
       }
+
+
+      async givePremium(id:string){
+        const idUsuario= id.split("|")[2]
+        if(idUsuario !== "ANON"){
+          const usuario= await prisma.user.findFirst({
+           where:{
+             id: Number(idUsuario)
+           }
+          })
+          // if(usuario?.role==="ADMIN") return false
+          if(usuario){
+            const userPremium= await prisma.user.update({
+              where: { id: usuario?.id },
+              data: {
+                role: "PREMIUM"
+              },
+            })
+            if (userPremium) return true
+            return false
+          }
+          return null
+
+
+        }
+        return false
+       }
 
 };
 

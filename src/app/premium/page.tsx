@@ -13,7 +13,7 @@ export default function VistaPagar(){
     const id = ((event.currentTarget.elements.namedItem("id_pago") as HTMLInputElement).value)
     const amount = ((event.currentTarget.elements.namedItem("amount") as HTMLInputElement).value)
     const message = ((event.currentTarget.elements.namedItem("message") as HTMLInputElement).value)
-    console.log(id + " ID DESDE EL FORM")
+    const sessionId = ((event.currentTarget.elements.namedItem("sessionId") as HTMLInputElement).value)
     const response = await fetch('/api/premium', {
       method: 'POST',
       headers: {
@@ -23,6 +23,7 @@ export default function VistaPagar(){
         id,
         amount,
         message,
+        sessionId,
       }),
     });
     
@@ -43,6 +44,7 @@ export default function VistaPagar(){
           {/* <input hidden readOnly value={session.data? `User${session.data?.user.id}-${session.data.user.name}`:"ANON"} name="description" type="text" /> */}
           <input hidden  defaultValue={"donation_premium"} name="id_pago" type="text" />
           <textarea hidden readOnly value={`Recipify Premium.|${donante}`} name="message" />
+          <textarea hidden readOnly value={`${donante}`} name="sessionId" />
         <button type="submit">Pagar</button>
       </form>
         </div>
