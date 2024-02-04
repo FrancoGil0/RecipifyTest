@@ -1,12 +1,24 @@
 import prisma from "@/libs/prisma";
-import { iRecipeInfo } from "@/interfaces/recipeInterfaces";
+import { iRecipeAndRelations, iRecipeInfo } from "@/interfaces/recipeInterfaces";
 
 class RecipeServices {
 
   async getRecipe() {
+
+    
+ 
+
+  
+
+    
+
+
     const recipe = await prisma.recipe.findMany({
       include: {
         categoria: true
+      },
+      where:{
+        visibility:true
       }
     });
     if (!recipe) {
@@ -109,13 +121,7 @@ class RecipeServices {
     return updatedRecipe;
   };
 
-  async deleteRecipe(id: number) {
-    const deletedRecipe = await prisma.recipe.delete({
-      where: { id },
-    });
 
-    return deletedRecipe;
-  };
 
   async getRecetasConAutor(){
 
@@ -123,6 +129,9 @@ class RecipeServices {
       include: {
         author:true,
         categoria:true
+      },
+      where:{
+        visibility:true
       }
     });
     return recipes;
@@ -136,8 +145,34 @@ class RecipeServices {
 
   }
 
+  async deleteRecipe(id: String) {
+    const idRecipeNumber=Number(id)
+    await prisma.review.deleteMany({
+      where: { recipeID: idRecipeNumber },
+    });
+    
+    const updatedRecipe = await prisma.recipe.update({
+      where: { id:idRecipeNumber},
+      data: {
+        visibility:false
+      },
+    });
+  
+  };
 
 
+  async getDeletedRecipes(){
+    const deletedRecipes = await prisma.recipe.findMany({
+      include: {
+        author:true,
+        categoria:true
+      },
+      where:{
+        visibility:false
+      }
+    });
+    return deletedRecipes;
+  }
 
 
 };

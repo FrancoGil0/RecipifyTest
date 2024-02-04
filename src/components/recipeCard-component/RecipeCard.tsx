@@ -3,8 +3,8 @@ import './RecipeCard.css'
 import Image from 'next/image'
 import { iRecipeInfo } from '@/interfaces/recipeInterfaces'
 // const RecipeCard = ({ id, title, photo, description, author, categoria }: { id: number, title: string, photo: string, description: string, author: IuserInfo, categoria:categoriasInterface}) => {
-const RecipeCard = (recipe:iRecipeInfo) => {
-
+// const RecipeCard = (recipe:iRecipeInfo) => {
+const RecipeCard =({recipe,handleReported}:{recipe:iRecipeInfo, handleReported:any})=>{
     const createdAt=recipe.createdAt.slice(0,10)
     const ingredients = recipe.ingredients.split(",")
 
@@ -53,6 +53,9 @@ const RecipeCard = (recipe:iRecipeInfo) => {
                         <p className='text-neutral-200 '>Ver Cocinero</p>
                     </div>
                 </Link>
+                <button onClick={() => handleReported(recipe.id,recipe.authorID)}>
+                    Reportar
+                </button>
             </div>
 
         </section>

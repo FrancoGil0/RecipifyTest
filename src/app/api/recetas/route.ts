@@ -1,6 +1,7 @@
 import RecipeServices from "@/services/recipeServices";
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
+import AdminServices from "@/services/adminServices";
 
 const recipeServicio = new RecipeServices();
 
@@ -9,6 +10,15 @@ cloudinary.config({
   api_key: "989994138848722",
   api_secret: "MCLCr24PMzwAQd0XnFi7Uy-lRFM",
 });
+
+interface ReportedID{
+
+  idRecipe:String,
+
+  idReported:String
+
+}
+
 export async function POST(request: NextRequest) {
   const data = await request.formData();
   const titulo = data.get("title") as string;
@@ -121,6 +131,8 @@ export async function GET(request: Request) {
   //   );
   // }
 
+
+
   const recipes = await recipeServicio.getRecetasConAutor();
 
   //Sacar PASSWORD de la respuesta.
@@ -130,6 +142,28 @@ export async function GET(request: Request) {
   // })
 
   return NextResponse.json(recipes);
+}
+
+export async function DELETE(request: Request) {
+
+  const body:ReportedID = await request.json()
+
+  const recipeServicio = new RecipeServices();
+
+  const adminServices = new AdminServices();
+
+  adminServices.borrarReportes(body.idRecipe);
+
+  recipeServicio.deleteRecipe(body.idRecipe)
+
+  return NextResponse.json(
+
+    { message: "Borrado exitosamente" },
+
+    { status: 200 }
+
+  );
+
 }
 
 

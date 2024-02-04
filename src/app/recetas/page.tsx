@@ -5,7 +5,7 @@ import RecipeCard from "@/components/recipeCard-component/RecipeCard"
 import Pagination from "@/components/pagination-component/Pagination"
 import { iRecipeInfo } from "@/interfaces/recipeInterfaces"
 import { useSession } from 'next-auth/react'
-import { categoriasInterface } from '@/interfaces/categoriasInterface'
+// import { categoriasInterface } from '@/interfaces/categoriasInterface'
 
 const MainPage = () => {
 
@@ -44,6 +44,19 @@ const MainPage = () => {
         fetchUsers()
     }, [])
 
+    const handleReported=  (idRecipe:string,idUser:string)=>{
+        const res = fetch("http://localhost:3000/api/admin", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idRecipe,
+                idUser
+            }),
+          });
+        }
+
     return (
         <>
             <main className="w-screen h-screen">
@@ -56,7 +69,8 @@ const MainPage = () => {
                 }
                 <div className="flex flex-col md:flex-row gap-3 md:flex-wrap md:justify-evenly md:gap-10 p-3 sm:p-0">
                     {recipes.map((recipe: iRecipeInfo) => (
-                        <RecipeCard {...recipe}/>
+                        // <RecipeCard {...recipe} key={recipe.id}/>
+                        <RecipeCard recipe={recipe} handleReported={handleReported}/>
                         // <RecipeCard id={recipe.id} title={recipe.title} photo={recipe.photo} author={recipe.author} description={recipe.description} categoria={recipe.categoria as categoriasInterface} key={recipe.id} />
                     )).slice(firstIndex, lastIndex)}
                 </div>

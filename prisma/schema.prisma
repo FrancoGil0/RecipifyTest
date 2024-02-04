@@ -19,7 +19,7 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
   photo String @default("https://i.pinimg.com/236x/2f/97/f0/2f97f05b32547f54ef1bdf99cd207c90.jpg")
-  profileDescription String @default("")
+  profileDescription String @default("Hola, Estoy usando Recipify :D")
   email String @unique
   name String
   country String
@@ -32,13 +32,19 @@ model User {
   reporteds Reported[]
 }
 
+model Payment  {
+    id Int @id @default(autoincrement())
+    amount Int
+    by String
+  }
+
 
 model Favorite{
   id Int @id @default(autoincrement())
-  likedBy User @relation(fields: [userID],references: [id])
   userID Int
-  likedRecipe Recipe @relation(fields: [recipeID],references: [id])
   recipeID Int
+  likedBy User @relation(fields: [userID],references: [id])
+  likedRecipe Recipe @relation(fields: [recipeID],references: [id])
 }
 
 model Reported{
@@ -72,6 +78,7 @@ model Recipe {
   rating Int
   pasos String
   ingredients String 
+  visibility Boolean @default(true)
   author User @relation(fields: [authorID],references: [id])
   authorID Int
   createdAt DateTime @default(now())

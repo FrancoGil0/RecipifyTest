@@ -4,6 +4,7 @@ import prisma from "@/libs/prisma";
 interface Params {
   params: { id: string };
 }
+
 export async function GET(request: NextRequest, { params }: Params) {
   const id = params.id;
   const idUsuario = request.headers.get("idUsuario");
@@ -47,8 +48,8 @@ export async function GET(request: NextRequest, { params }: Params) {
       id: Number(id),
     },
     include: {
-      author: { select: { name: true } },
-      categoria: { select: { name: true } },
+      author:  true ,
+      categoria: true,
     },
   });
 // buscamos la valoracion de la receta según el usuario

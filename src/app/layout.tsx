@@ -18,7 +18,7 @@ export const titleFont=localFont({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className={"bg-neutral-400 overflow-x-hidden  flex flex-col min-h-screen"}>
+      <body className={"bg-neutral-200 overflow-x-hidden  flex flex-col min-h-screen max-h-fit relative"}>
         <Providers>
           <NavBar/>
           {children}

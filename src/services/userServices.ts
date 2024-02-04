@@ -1,7 +1,9 @@
+import { updateData } from "@/app/api/userback/perfil/route";
 import { IUserInfo } from "@/interfaces/userInterfaces";
 import prisma from '@/libs/prisma'
 import { compare } from 'bcryptjs';
 import { hash } from 'bcryptjs';
+import { NextResponse } from "next/server";
 
 class UserServices {
    async compararPassword(password:string, repeatPassword?:string){
@@ -39,6 +41,10 @@ class UserServices {
         const usuario = await this.dbHelper.user.findUnique({
             where: {
                 id: Number(id)
+            },
+            include:{
+              posts:{select:{title:true,author:true}},
+              reviews:{select:{id:true,recipeID:true,authorID:true,rating:true}},
             }
         })
         if (!usuario) {
@@ -76,8 +82,8 @@ class UserServices {
     };
    
   /////
-  validarCampos(name:string,email:string ,password:string, repeatPassword?:string){
-    if(name=="" || email== "" ||password == "" || repeatPassword == ""){
+  validarPassword(password:string, repeatPassword?:string){
+    if(password == "" || repeatPassword == ""){
       throw new Error("Todos los campos son obligatorios")
     }
 }
@@ -111,26 +117,64 @@ async existEmailDatabase(email:string){
       throw new Error ("El email ingresado existe en la base de datos")
     }
   }
-async updateUser(data: IUserInfo) {
-        this.validarCampos(data.name,data.email,data.password,data.repeatPassword)
+async changePassword(data:{id:number,password:string,repeatPassword:string}) {
+        this.validarPassword(data.password,data.repeatPassword)
         this.compararPasswordYrepeatPassword(data.password,data.repeatPassword)
-        await this.comprobarEmailSinoError(data.email)
-        await this.existNameDatabase(data.name)
-        await this.existEmailDatabase(data.email)
         const idNumber=Number(data.id)
         const newHashedPassword = await this.hashPassword(data.password);
         const updatedUser = await this.dbHelper.user.update({
             where: { id: idNumber },
              data: {
-                email: data.email,
-                name: data.name,
                 password: newHashedPassword
               },
             });
         return updatedUser;
       }
 
+async editarUsuario(data:updateData){
+  try{
+    const userExiste=await this.dbHelper.user.findFirst({
+      where:{
+        id:Number(data.id),
+      }
+    })
 
+    if (!userExiste) throw new Error("El usuario que intenta actualizar no existe.")
+
+    const name = data.name? data.name : userExiste.name
+    const photo = data.photo? data.photo : userExiste.photo
+    const profileDescription = data.profileDescription? data.profileDescription : userExiste.profileDescription
+
+    const updatedUser = await this.dbHelper.user.update({
+      where:{
+        id:Number(userExiste.id)
+      },
+      data:{
+        name,
+        photo,
+        profileDescription
+      }
+    })
+
+    return updatedUser
+
+  }catch(error){
+    throw new Error("No se pudo actualizar. 505 :D")
+  }
+}
+
+
+async getPhoto(idUser:number){
+  return await this.dbHelper.user.findFirst({
+    where:{
+      id:idUser
+    },
+    select:{
+      id:true,
+      photo:true
+    }
+  })
+}
 
 
 
