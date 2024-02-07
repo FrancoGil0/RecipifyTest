@@ -1,18 +1,10 @@
 import prisma from "@/libs/prisma";
-import { iRecipeAndRelations, iRecipeInfo } from "@/interfaces/recipeInterfaces";
+import {iRecipeInfo } from "@/interfaces/recipeInterfaces";
+
 
 class RecipeServices {
 
   async getRecipe() {
-
-    
- 
-
-  
-
-    
-
-
     const recipe = await prisma.recipe.findMany({
       include: {
         categoria: true
@@ -121,29 +113,36 @@ class RecipeServices {
     return updatedRecipe;
   };
 
+  
+  
 
-
-  async getRecetasConAutor(){
-
+  async getRecetasConAutor(role:string){
+    if(role==="ADMIN"||role==="PREMIUM"){
+      const recipes = await prisma.recipe.findMany({
+        include: {
+          author: true,
+          categoria: true
+        },
+        where: {
+          visibility: true
+        },
+      });
+      console.log("ADMIN O PREMIUM")
+      return recipes;
+    }
     const recipes = await prisma.recipe.findMany({
       include: {
-        author:true,
-        categoria:true
+        author: true,
+        categoria: true
       },
-      where:{
-        visibility:true
-      }
+      where: {
+        visibility: true
+      },
+      take: 2  // Añade esta línea para limitar resultados
     });
+    console.log("USER")
     return recipes;
   };
-
-  async parsearData(){
-    const data = await this.getRecetasConAutor();
-    console.log(data);
-
-    return data;
-
-  }
 
   async deleteRecipe(id: String) {
     const idRecipeNumber=Number(id)

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 
-interface Params {
+export interface ParamsId {
   params: { id: string };
 }
-export async function GET(request: NextRequest, { params }: Params) {
+export async function GET(request: NextRequest, { params }: ParamsId) {
   const id = params.id;
   const idUsuario = request.headers.get("idUsuario");
   //cantidad de recetas que tiene una receta

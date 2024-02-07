@@ -13,9 +13,9 @@ export async function POST (req:Request){
 
     const id= String(session?.user.id)
 
-    console.log("SESSION ID TRAIDO DESDE EL SERVER "+id)
+    // console.log("SESSION ID TRAIDO DESDE EL SERVER "+id)
 
-    const successURL= id !== "ANON"? `https://hopkins-villas-instruction-sa.trycloudflare.com/gracias/${id}` : `https://hopkins-villas-instruction-sa.trycloudflare.com/gracias`
+    const successURL= id !== "ANON"? `https://adrian-sites-approx-just.trycloudflare.com/gracias/${id}` : `https://adrian-sites-approx-just.trycloudflare.com/gracias`
 
 
     const preference = await new Preference(client).create({
@@ -30,8 +30,8 @@ export async function POST (req:Request){
           ],
           back_urls:{
             success:successURL,
-            failure:"https://hopkins-villas-instruction-sa.trycloudflare.com/premium",
-            pending:"https://hopkins-villas-instruction-sa.trycloudflare.com/premium"
+            failure:"https://adrian-sites-approx-just.trycloudflare.com/premium",
+            pending:"https://adrian-sites-approx-just.trycloudflare.com/premium"
           },
           auto_return:"approved"
         },

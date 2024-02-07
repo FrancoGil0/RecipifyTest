@@ -53,9 +53,9 @@ const RecipeCard =({recipe,handleReported}:{recipe:iRecipeInfo, handleReported:a
                         <p className='text-neutral-200 '>Ver Cocinero</p>
                     </div>
                 </Link>
-                <button onClick={() => handleReported(recipe.id,recipe.authorID)}>
-                    Reportar
-                </button>
+                <div onClick={() => handleReported(recipe.id,recipe.authorID)} className='bg-neutral-600 h-[50px] w-[125px] flex flex-col justify-center items-center rounded-xl text-xl shadow-xl hover:translate-y-[-10px] transition-all hover:scale-110'>
+                        <p className='text-red-500'>Reportar</p>
+                    </div>
             </div>
 
         </section>

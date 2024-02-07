@@ -52,7 +52,10 @@ class UserServices {
         }
         return usuario;
     }
-    async giveRole({ id, role }: IUserInfo) {
+
+
+    
+    async giveRole({ id, role }: {id:number,role:string}) {
         const userExiste = await this.dbHelper.user.findFirst({ where: { id: id } });
         if (!userExiste) {
           throw new Error("No se pudo encontrar al usuario al cual le querés cambiar dar un rol");
@@ -63,6 +66,9 @@ class UserServices {
         });
         return updatedUser;
       }
+
+
+
     async getUserByEmail(email: string){
         const usuario = await this.dbHelper.user.findUnique({
             where: {
@@ -231,7 +237,7 @@ async getPhoto(idUser:number){
                 role: "PREMIUM"
               },
             })
-            if (userPremium) return true
+            if (userPremium) return userPremium
             return false
           }
           return null

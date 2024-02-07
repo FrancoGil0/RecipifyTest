@@ -1,6 +1,6 @@
-import { NextRequest } from "next/server"
+import { NextRequest} from "next/server"
 // import { IUserInfo } from "@/interfaces/userInterfaces";
-// import UserServices from "@/services/userServices"
+
 import prisma from '@/libs/prisma'
 interface Params{
     params: {id:string}
@@ -23,3 +23,5 @@ export async function GET(_request:NextRequest,{params}:Params){
     })
     return new Response(JSON.stringify(user)) 
 }
+
+

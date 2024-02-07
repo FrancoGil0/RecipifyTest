@@ -30,7 +30,18 @@ model User {
   reviews Review[]
   favorites Favorite[]
   reporteds Reported[]
+  schRecipes ScheduledRecipes[]
 }
+
+model ScheduledRecipes {
+    id Int @id @default(autoincrement())
+    userID Int
+    recipeID Int
+    schBy User @relation(fields: [userID],references: [id])
+    schRecipe Recipe @relation(fields: [recipeID],references: [id])
+
+}
+
 
 model Payment  {
     id Int @id @default(autoincrement())
@@ -46,6 +57,8 @@ model Favorite{
   likedBy User @relation(fields: [userID],references: [id])
   likedRecipe Recipe @relation(fields: [recipeID],references: [id])
 }
+
+
 
 model Reported{
   id Int @id @default(autoincrement())
@@ -66,7 +79,6 @@ model PasswordResetToken {
   resetAt   DateTime?
   user   User @relation(fields: [userId], references: [id])
   userId Int
-  
 } 
 
 
@@ -88,6 +100,7 @@ model Recipe {
   reviews Review[] 
   favorites Favorite[]
   reports Reported[]
+  schRecords ScheduledRecipes[]
 }
 
 model Categoria {
