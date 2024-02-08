@@ -4,6 +4,17 @@ import {iRecipeInfo } from "@/interfaces/recipeInterfaces";
 
 class RecipeServices {
 
+  async scheduleRecipe(idReceta: string,idUser:string, date:Date, horario: string){
+    const newRecipe = await prisma.scheduledRecipes.create({
+      data: {
+        userID: Number(idUser),
+        recipeID: Number(idReceta),
+        schDate: date,
+        schTime: horario
+      }})
+    return newRecipe;
+  }
+
   async getRecipe() {
     const recipe = await prisma.recipe.findMany({
       include: {
@@ -30,6 +41,7 @@ class RecipeServices {
     const recipe = await prisma.recipe.findFirst({
       where: {
         id: id,
+        visibility:true
       },
     });
     if (!recipe) {
@@ -51,7 +63,8 @@ class RecipeServices {
       where:{
         title:{
           contains:recipeName as string,
-        }
+        },
+        visibility:true
       },
       include: {
         author: { select: { name: true } },

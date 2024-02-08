@@ -190,7 +190,7 @@ return (
 
             {SearchedRecipes.length !== 0 ?
 
-                <div className="bg-[#747676bb] absolute flex flex-col px-3 pt-3 gap-2 rounded-xl h-fit mt-2 w-[220px] sm:w-[400px] md:w-[450px] lg:w-[700px] xl:w-[800px] 2xl:w-[900px] pb-5 ">
+                <div className="z-50 bg-[#747676bb] absolute flex flex-col px-3 pt-3 gap-2 rounded-xl h-fit mt-2 w-[220px] sm:w-[400px] md:w-[450px] lg:w-[700px] xl:w-[800px] 2xl:w-[900px] pb-5 ">
 
                     <div className='self-end w-[25px] h-[25px] flex justify-center items-center cursor-pointer'
 
@@ -211,6 +211,7 @@ return (
                         if (recipes.length !== 0) {
 
                             return <SearchItem {...recipe} key={recipe.id} />
+                          
 
                         }
 

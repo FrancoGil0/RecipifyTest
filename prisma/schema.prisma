@@ -37,9 +37,10 @@ model ScheduledRecipes {
     id Int @id @default(autoincrement())
     userID Int
     recipeID Int
+    schDate DateTime
+    schTime String
     schBy User @relation(fields: [userID],references: [id])
     schRecipe Recipe @relation(fields: [recipeID],references: [id])
-
 }
 
 
@@ -58,8 +59,6 @@ model Favorite{
   likedRecipe Recipe @relation(fields: [recipeID],references: [id])
 }
 
-
-
 model Reported{
   id Int @id @default(autoincrement())
   reportedBy User @relation(fields: [userID],references: [id])
@@ -67,10 +66,6 @@ model Reported{
   reportedRecipe Recipe @relation(fields: [recipeID], references: [id])
   recipeID Int
 }
-
-
-
-
 
 model PasswordResetToken {
   id        Int       @id @default(autoincrement())
