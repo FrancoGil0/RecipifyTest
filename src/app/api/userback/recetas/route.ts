@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import RecipeServices from "@/services/recipeServices";
-import { iRecipeInfo, iSearchedRecipe } from "@/interfaces/recipeInterfaces";
+import {iSearchedRecipe } from "@/interfaces/recipeInterfaces";
 
 interface ICalendar {
     idReceta: string,

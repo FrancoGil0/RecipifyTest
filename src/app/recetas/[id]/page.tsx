@@ -164,17 +164,17 @@ const Recipe = ({ params }: { params: { id: string } }) => {
     return (
         <div className="min-h-screen min-w-screen relative py-10">
 
-            <div className='absolute top-[33%] right-[20%]'>
+            {session?.user.id === recipe.authorID ? <div className='absolute top-[33%] right-[20%]'>
             <Dropdown className='shadow-xl' placement='bottom-end'>
                 <DropdownTrigger className='cursor-pointer'>
                     <h1 className='text-5xl'>...</h1>
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Menu Actions" variant="faded">
-                    <DropdownItem className='text-black font-bold h-[50px]'>Editar Receta</DropdownItem>
+                    <DropdownItem className='text-black font-bold h-[50px]'><Link href={`/recetas/editar/${recipe.id}`} className='text-inherit hover:text-inherit'>Editar Receta</Link></DropdownItem>
                     <DropdownItem onClick={handleEliminarReceta} className='text-red-500 font-bold h-[50px]'>Borrar Receta</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-            </div>
+            </div> : <></>}
 
 
             {visibility && <div className="absolute lg:top-[34%] lg:right-[20%] z-0 w-[300px] h-fit bg-emerald-700 flex flex-col items-center px-2 py-3 rounded-lg shadow-md shadow-neutral-600 ">

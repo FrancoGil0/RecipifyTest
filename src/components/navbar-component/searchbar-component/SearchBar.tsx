@@ -98,8 +98,9 @@ const handleSearch: SubmitHandler<FormValues> = (data) => {
 
                 recipe.title.toUpperCase().includes(toSearch.toUpperCase()) ||
 
-                recipe.categoria.name.toUpperCase().includes(toSearch.toUpperCase())
-
+                recipe.categoria.name.toUpperCase().includes(toSearch.toUpperCase()) ||
+                
+                recipe.ingredients.toUpperCase().includes(toSearch.toUpperCase())
             );
 
         })
@@ -188,11 +189,11 @@ return (
 
  
 
-            {SearchedRecipes.length !== 0 ?
+            {SearchedRecipes.length !== 0  ?
 
-                <div className="z-50 bg-[#747676bb] absolute flex flex-col px-3 pt-3 gap-2 rounded-xl h-fit mt-2 w-[220px] sm:w-[400px] md:w-[450px] lg:w-[700px] xl:w-[800px] 2xl:w-[900px] pb-5 ">
+                <div className="z-50 bg-[#1c1c1c9a] absolute flex flex-col px-3 pt-3 gap-2 rounded-xl h-fit mt-2 w-[220px] sm:w-[49%] pb-5 ">
 
-                    <div className='self-end w-[25px] h-[25px] flex justify-center items-center cursor-pointer'
+                    <div className='self-end w-[25px] h-[25px] flex justify-center items-center text-white  cursor-pointer'
 
                         onClick={() => setSearchedRecipes([] as Array<iRecipeInfo>)}
 
@@ -219,7 +220,7 @@ return (
 
                     })}
 
-                </div> : <></>}
+                </div> :<></>}
 
 </search>
 

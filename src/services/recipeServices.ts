@@ -186,6 +186,46 @@ class RecipeServices {
     return deletedRecipes;
   }
 
+  async updateReceta(id:string,title: string,photo:string | null,description:string,pasos:string,ingredients:string,categoriaID:string,idUsuario:string ) {
+
+    const numberCategoria=Number(categoriaID)
+    const numberAuthor=Number(idUsuario)
+    const recipeExists = await prisma.recipe.findFirst({
+      include: {
+        categoria: true
+      },
+      where: {
+        id: Number(id)
+      },
+    });
+    if(recipeExists){
+    const titleRecipe = title && title != "" && title != " " ? title : recipeExists.title
+    const photoRecipe= photo ? photo : recipeExists.photo
+    const descriptionRecipe = description && description != "" && description != " "  ? description : recipeExists.description
+    const pasosRecipe= pasos && pasos != "" && pasos != " "  ? pasos : recipeExists.pasos
+    const ingredientsRecipe = ingredients ? ingredients : recipeExists.ingredients
+
+
+    const newRecipe = await prisma.recipe.update({
+      where:{
+        id: recipeExists.id
+      },
+      data: {
+        title: titleRecipe,
+        photo: photoRecipe,
+        description:descriptionRecipe as string,
+        pasos: pasosRecipe,
+        rating:0,
+        ingredients: ingredientsRecipe,
+        categoria: { connect: { id: numberCategoria } },
+        author: { connect: { id: numberAuthor } }
+      }
+    });
+
+    return newRecipe;
+  }
+  };
+
 
 };
 
