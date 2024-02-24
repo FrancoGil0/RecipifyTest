@@ -8,6 +8,7 @@ export interface userLogin{
 
 export interface IUserInfo{
     id?:number,
+    visibility?:boolean
     profileDescription?:string,
     photo?:string,
     email:string,

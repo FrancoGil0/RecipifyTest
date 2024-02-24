@@ -19,7 +19,8 @@ class TokenService {
 
     async enviarEmail(email:string, name:string, token:string){
        await this.resend.emails.send({
-        from: "email@mail.spacejelly.dev",
+        // from: "email@mail.spacejelly.dev",
+        from: 'onboarding@resend.dev',
         to: email,
         subject: "Recipify",
         react: EmailTemplate({ firstName: name, token: token }),

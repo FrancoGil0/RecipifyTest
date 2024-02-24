@@ -3,8 +3,9 @@ import { NextResponse } from "next/server";
 
 interface User {
   id: string;
+  rol:string
 }
-export async function POST(request: Request) {
+export async function PATCH(request: Request) {
   const body: User = await request.json();
   const user = await prisma.user.findFirst({
     where: {
@@ -14,8 +15,8 @@ export async function POST(request: Request) {
   const userUpdate = await prisma.user.update({
     where: { id: Number(body.id) },
     data: {
-      role: "BLOCKED"
+      role: body.rol
     },
   });
-  return NextResponse.json({user:userUpdate, message:"usuario cambiado a rol BLOCKED"},{status: 201})
+  return NextResponse.json({user:userUpdate, message:"usuario cambiado a rol ADMIN"},{status: 201})
 }

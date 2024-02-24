@@ -7,8 +7,6 @@ import { Link, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@ne
 import NextLink from 'next/link'
 import Image from 'next/image'
 import SearchBar from './searchbar-component/SearchBar'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons';
 import SignInButton from '../botonSignin/SigninButton'
 import { MenuIcon } from '../icons'
 
@@ -53,7 +51,7 @@ const NavBar = () => {
                             {session.user.role === "ADMIN" ? <DropdownItem className='text-black h-[50px]' key="categorias"><Link as={NextLink} href={"/api/categoria"}>Crear Categoría</Link></DropdownItem> : <DropdownItem className='hidden'></DropdownItem>}
                             {session.user.role === "ADMIN" ? <DropdownItem className='text-black h-[50px]' key="reportes"><Link as={NextLink} href={"/admin"}>Panel de Administración</Link></DropdownItem> : <DropdownItem className='hidden'></DropdownItem>}
                             <DropdownItem onClick={handlePerfil} className='text-black h-[50px]' key="recetas"><Link as={NextLink} href={`/perfil/${session.user.id}`}>Mí Perfíl</Link></DropdownItem>
-                            <DropdownItem onClick={handlePerfil} className='text-black h-[50px]' key="recetas"><Link as={NextLink} href={`/premium`}>Sé Premium</Link></DropdownItem>
+                            {session.user.role=== "USER" ? <DropdownItem onClick={handlePerfil} className='text-black h-[50px]' key="recetas"><Link as={NextLink} href={`/premium`}>Sé Premium</Link></DropdownItem> : <DropdownItem className='hidden'></DropdownItem>}
                             <DropdownItem onClick={handleHelp} className='text-black h-[50px]' key="">Ayuda & Feedback</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
@@ -82,7 +80,7 @@ const NavBar = () => {
                 <DropdownMenu aria-label="Menu Actions" variant="faded">
                     <DropdownItem className='text-black h-[50px]'><Link as={NextLink} href='/api/register'>Registrate</Link></DropdownItem>
                     <DropdownItem className='text-black h-[50px]'><Link as={NextLink} href='/api/login/signin'>Iniciá Sesión</Link></DropdownItem>
-                    <DropdownItem onClick={handlePerfil} className='text-black h-[50px]' key="recetas"><Link as={NextLink} href={`/premium`}>Sé Premium</Link></DropdownItem>
+                    <DropdownItem onClick={handlePerfil} className='text-black h-[50px]' key="recetas"><Link as={NextLink} href={`/premium`}>DONAR</Link></DropdownItem>
                 </DropdownMenu>
             </Dropdown>
 

@@ -8,6 +8,29 @@ body {
   font-family: 'Microsoft Sans-Serif', sans-serif;
 }
 
+@keyframes pulse {
+  25%{
+      background-color: #18994971;
+      opacity: .2;
+  }
+  55% {
+      background-color: #18994971;
+      opacity: .3;
+  }
+  70% {
+      background-color: #18994971;
+      opacity: .4;
+  }
+  90% {
+      background-color: #18994971;
+      opacity: .5;
+  }
+  
+}
+.pulsation {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 
 
 

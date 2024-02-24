@@ -2,6 +2,7 @@ import Link from 'next/link'
 import './RecipeCard.css'
 import Image from 'next/image'
 import { iRecipeInfo } from '@/interfaces/recipeInterfaces'
+import { ReportIcon } from '../icons'
 // const RecipeCard = ({ id, title, photo, description, author, categoria }: { id: number, title: string, photo: string, description: string, author: IuserInfo, categoria:categoriasInterface}) => {
 // const RecipeCard = (recipe:iRecipeInfo) => {
 const RecipeCard =({recipe,handleReported}:{recipe:iRecipeInfo, handleReported:any})=>{
@@ -53,8 +54,8 @@ const RecipeCard =({recipe,handleReported}:{recipe:iRecipeInfo, handleReported:a
                         <p className='text-neutral-200 '>Ver Cocinero</p>
                     </div>
                 </Link>
-                <div onClick={() => handleReported(recipe.id,recipe.authorID)} className='bg-neutral-600 h-[50px] w-[125px] flex flex-col justify-center items-center rounded-xl text-xl shadow-xl hover:translate-y-[-10px] transition-all hover:scale-110'>
-                        <p className='text-red-500'>Reportar</p>
+                <div onClick={() => handleReported(recipe.id,recipe.authorID)} className='bg-neutral-600 text-red-500 cursor-pointer h-[35px] self-center w-[35px] flex flex-col justify-center items-center rounded-xl text-xl shadow-xl hover:translate-y-[-10px] transition-all hover:scale-110'>
+                        <ReportIcon/>
                     </div>
             </div>
 

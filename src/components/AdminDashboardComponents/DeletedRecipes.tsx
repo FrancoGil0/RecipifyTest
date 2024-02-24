@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AlertIcon, EyeIcon, ResetIcon } from "../icons";
 import {useRouter} from "next/navigation";
+import { Spinner } from "@nextui-org/react";
 
 
 const DeletedRecipes = () => {
@@ -11,6 +12,7 @@ const DeletedRecipes = () => {
     const router= useRouter();
 
     const [recipes, setRecipes] = useState([] as iRecipeInfo[])
+    const [loading, setLoading] = useState(true)
     type confirmationObject={
         visibility:Boolean,
         recipeId:number|null
@@ -20,17 +22,19 @@ const DeletedRecipes = () => {
     const [confirmationDiv, setConfirmationDiv] = useState({} as confirmationObject);
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchRecipes = async () => {
             const response = await fetch("http://localhost:3000/api/deleted-recipes", {
                 method: "GET",
             });
             const deletedRecipes = await response.json();
+            setLoading(false);
             setRecipes(deletedRecipes);
+
         };
 
 
 
-        fetchUsers();
+        fetchRecipes();
 
     }, [recipes]);
 
@@ -66,13 +70,17 @@ const DeletedRecipes = () => {
 
     return (
         <div className="lg:min-h-[700px]  py-12">
-
+            {loading && 
+            <div className="w-full flex items-center justify-center h-full">
+            <Spinner></Spinner>
+        </div>
+            }
             {recipes.length > 0 ? (
 
                 <div className="lg:w-[950px] lg:h-[500px]  mx-auto">
                     <table className=" w-full table-fixed ">
                         <thead>
-                            <tr className="bg-neutral-400 w-full">
+                            <tr className="bg-neutral-400 w-full text-center">
                                 <th className="w-1/3 p-2">Subida por:</th>
                                 <th className="w-1/3 p-2">Receta</th>
                                 <th className="w-1/3 p-2">Acciones</th>
@@ -93,7 +101,7 @@ const DeletedRecipes = () => {
                                         </div>
                                     </td>
                                 </tr>
-                            ))}1
+                            ))}
                         </tbody>
                     </table>
                     {confirmationDiv.visibility && <div className="absolute flex flex-col items-center justify-between top-[22%] left-[40%] pt-6  w-[400px] h-[300px] bg-neutral-700">
@@ -111,8 +119,10 @@ const DeletedRecipes = () => {
                         </form>
                     </div>}
                 </div >
-            ) : (
-                <div className=" lg:container">No hay reportes</div>
+            ) :  (
+                loading || <div className="w-full flex items-center justify-center h-full">
+                    No hay Recetas Reprotadas
+                </div>
             )
             }
 

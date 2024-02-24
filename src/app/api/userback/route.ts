@@ -40,3 +40,14 @@ export async function POST (request:Request){
    return  NextResponse.json({user:result, message:"usuario creado con exito"},{status: 201})
    // return new Response(JSON.stringify(result))
 }
+
+
+export async function GET(){
+
+   const users = await prisma.user.findMany()
+
+   return NextResponse.json(users)
+
+
+
+}

@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {AdminInterface} from '@/app/api/admin/route'
 import { AlertIcon, DeleteRecipeIcon, DeleteReportIcon, EyeIcon } from "../icons";
+import { ListLoader, TableLoader } from "../UserProfileComponents/perfilLoadingComponents";
+import { Spinner } from "@nextui-org/react";
 
 
 
@@ -39,6 +41,7 @@ interface Reportes {
 export default function ReportedRecipes() {
 
     const [reports, setReports] = useState([] as Reportes[]);
+    const [loading, setLoading] = useState(true);
 
     type confirmationObject={
         visibility:Boolean,
@@ -59,12 +62,12 @@ export default function ReportedRecipes() {
                 method: "GET",
             });
             const reportesExistentes = await response.json();
+            setLoading(false);
             setReports(reportesExistentes);
+
         };
-
-
-
         fetchUsers();
+
 
     }, [reports]);
 
@@ -145,6 +148,8 @@ export default function ReportedRecipes() {
 
     }
 
+    
+
 
     
 
@@ -153,13 +158,17 @@ export default function ReportedRecipes() {
     return (
 
         <div className="lg:min-h-[700px]  py-12">
-
+            {loading && 
+            <div className="w-full flex items-center justify-center h-full">
+            <Spinner></Spinner>
+        </div>
+            }
             {reports.length > 0 ? (
 
                 <div className="relative lg:w-[950px] lg:h-[500px]  mx-auto">
                     <table className=" w-full table-fixed ">
                         <thead>
-                            <tr className="bg-neutral-400 w-full">
+                            <tr className="bg-neutral-400 w-full text-center">
                                 <th className="w-1/3 p-2">Reportada por:</th>
                                 <th className="w-1/3 p-2">Receta Reportada</th>
                                 <th className="w-1/3 p-2">Acciones</th>
@@ -175,9 +184,7 @@ export default function ReportedRecipes() {
                                             <Link className="pt-2" href={`/recetas/${report.reportedRecipe.id}`}>
                                                 <button className="hover:animate-spin"><EyeIcon /></button>
                                             </Link>
-
                                             <button className="hover:animate-bounce" onClick={()=>handleDivConfirmation({visibility:true,recipeId:+report.recipeID,reportId:report.id})}><DeleteRecipeIcon /></button>
-                                            <button className="hover:animate-bounce" onClick={()=>handleDeleteReport({idReporte:report.id})}><DeleteReportIcon /></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -210,7 +217,9 @@ export default function ReportedRecipes() {
                     </div>}
                 </div >
             ) : (
-                <div className=" lg:container">No hay reportes</div>
+                loading || <div className="w-full flex items-center justify-center h-full">
+                    No hay Reportes
+                </div>
             )
             }
 

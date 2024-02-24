@@ -1,5 +1,13 @@
+import { IUserInfo } from "@/interfaces/userInterfaces";
 import NextAuth, {AuthOptions}  from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+interface UserI{
+  id:string,
+  email:string,
+  name: string,
+  visibility?: Boolean
+}
 
 export const authOptions:AuthOptions={
   providers: [
@@ -22,17 +30,20 @@ export const authOptions:AuthOptions={
                 password: credentials?.password
             })
           })
-          const user=await res.json()
+          const user:UserI=await res.json()
     
-          if (user) {
-            // Any object returned will be saved in `user` property of the JWT
+          if (user== null) {
+            // Any object returned will be saved in user property of the JWT 
+            throw new Error( JSON.stringify("Contraseña o correo incorrecto"))
+          } else if(user.visibility == true){
+            
             return user
-          } else {
+          }else {
             // If you return null then an error will be displayed advising the user to check their details.
-            return null
+            throw new Error( JSON.stringify("Su cuenta esta suspendida"))
     
             // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
-          }
+          }
         }
       }
       )

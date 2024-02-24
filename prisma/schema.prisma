@@ -18,6 +18,7 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())
+  visibility Boolean @default(true)
   photo String @default("https://i.pinimg.com/236x/2f/97/f0/2f97f05b32547f54ef1bdf99cd207c90.jpg")
   profileDescription String @default("Hola, Estoy usando Recipify :D")
   email String @unique
@@ -31,6 +32,7 @@ model User {
   favorites Favorite[]
   reporteds Reported[]
   schRecipes ScheduledRecipes[]
+  
 }
 
 model ScheduledRecipes {

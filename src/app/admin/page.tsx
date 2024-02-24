@@ -5,6 +5,7 @@ import ReportedRecipes from "@/components/AdminDashboardComponents/ReportedRecip
 import { useSession } from "next-auth/react"
 import { titleFont } from "../layout";
 import { useState } from "react";
+import UsersListComponent from "@/components/AdminDashboardComponents/UsersComponent";
 
 type NavCase = {
     case: "Reportes" | "Usuarios" | "Recetas"
@@ -57,8 +58,7 @@ export default function AdminDashboard() {
                 </ul>
             </div>
             <div className="w-full h-fit ">
-                {caso.case === "Reportes" ? <ReportedRecipes></ReportedRecipes> : caso.case === "Recetas" ? <DeletedRecipes></DeletedRecipes> : <div>USUARIOS</div>}
-
+                {caso.case === "Reportes" ? <ReportedRecipes></ReportedRecipes> : caso.case === "Recetas" ? <DeletedRecipes></DeletedRecipes> : <UsersListComponent/>}
             </div>
             <div className="w-full h-300px bg-blue-600">
             </div>
