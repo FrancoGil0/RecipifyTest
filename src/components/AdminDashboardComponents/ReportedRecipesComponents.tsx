@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {AdminInterface} from '@/app/api/admin/route'
 import { AlertIcon, DeleteRecipeIcon, DeleteReportIcon, EyeIcon } from "../icons";
-import { ListLoader, TableLoader } from "../UserProfileComponents/perfilLoadingComponents";
+// import { ListLoader, TableLoader } from "../UserProfileComponents/perfilLoadingComponents";
 import { Spinner } from "@nextui-org/react";
 
 
@@ -130,6 +130,8 @@ export default function ReportedRecipes() {
         })
     }
 
+    //! REVISAR ESTA FUNCIÓN
+
     const handleDeleteReport =async  ({idReporte}:AdminInterface) => {
         const res = await fetch("http://localhost:3000/api/admin", {
             method: "DELETE",
@@ -138,14 +140,20 @@ export default function ReportedRecipes() {
             },
             body: JSON.stringify({
                 idReporte,
-                action:"deleteReport"
+                action:"deleteReporte"
             }),
         });
-
         if (res.ok) {
             router.push("/admin");
         }
+    }
 
+    const handleCancel=()=>{
+        setConfirmationDiv({
+            visibility:false,
+            recipeId:0,
+            reportId:0
+        })
     }
 
     
@@ -184,6 +192,9 @@ export default function ReportedRecipes() {
                                             <Link className="pt-2" href={`/recetas/${report.reportedRecipe.id}`}>
                                                 <button className="hover:animate-spin"><EyeIcon /></button>
                                             </Link>
+
+                                            <button className="hover:animate-bounce" onClick={()=>handleDeleteReport({idReporte:report.id})}><DeleteReportIcon /></button>
+
                                             <button className="hover:animate-bounce" onClick={()=>handleDivConfirmation({visibility:true,recipeId:+report.recipeID,reportId:report.id})}><DeleteRecipeIcon /></button>
                                         </div>
                                     </td>
@@ -201,7 +212,8 @@ export default function ReportedRecipes() {
                         </tbody>
                     </table>
                     {confirmationDiv.visibility && <div className="absolute flex flex-col items-center justify-between top-3 right-[28%] pt-6  w-[400px] h-[300px] bg-neutral-700">
-                        <div  className="text-center text-2xl text-red-500 mx-auto flex items-center justify-center w-full">
+                        <div onClick={handleCancel} className="w-fit h-fit px-2 flex justify-center items-center text-center self-end absolute text-white  top-2 right-2 cursor-pointer">X</div>
+                        <div  className="text-center text-2xl text-red-500 mx-auto flex items-center justify-center w-full relative">
                             <AlertIcon className={"h-16 w-16 animate-ping text-center"}></AlertIcon>
                         </div>
                         <p className="text-white text-center mt-3 text-[50px]">Alerta</p>

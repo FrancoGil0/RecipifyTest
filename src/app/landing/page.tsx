@@ -20,18 +20,19 @@ const LandingPage = () => {
                 <div className={'cursor-pointer rounded-2xl sm:hidden fondo-transparente-verde-boton text-white text-center h-[60px] w-[300px] m-auto mt-5 p-3 ' + titleFont.className}>
                     <span className='text-[25px]'>Registrate Ahora</span> <FontAwesomeIcon className='ml-4 text-[25px]' icon={faArrowRightToBracket} />
                 </div>
-                <div className={`flex flex-col p-3 text-zinc-900 fondo-transparente-verde mt-5 rounded-xl shadow-xl text-lg sm:text-xl h-[300px] `}>
+                <div className={`flex flex-col p-3 text-zinc-900 bg-[#238f6ba5] mt-5 rounded-xl shadow-xl text-lg sm:text-xl h-[300px] `}>
+                {/* <div className={`flex flex-col p-3 text-zinc-900 fondo-transparente-verde mt-5 rounded-xl shadow-xl text-lg sm:text-xl h-[300px] `}> */}
                     <div className='w-full  rounded-xl flex mx-auto items-center h-1/2'>
                         <div className={'text-3xl w-1/4 text-center ' + titleFont.className}>Búsqueda Fácil y Rápida</div>
                         <div className={'text-3xl w-1/4 text-center ' + titleFont.className}> Recetas para todos los gustos</div>
                         <div className={'text-3xl w-1/4 text-center ' + titleFont.className}>Guardá Favoritos</div>
                         <div className={'text-3xl w-1/4 text-center ' + titleFont.className}>Compartí tu creatividad</div>                        
                     </div>
-                    <div className='w-full  text-white rounded-xl flex mx-auto items-center h-1/2'>
-                    <FontAwesomeIcon className='ml-4 text-[60px] w-1/4' icon={faSearch} />
-                    <FontAwesomeIcon className='ml-4 text-[60px] w-1/4' icon={faAtlas} />
-                    <FontAwesomeIcon className='ml-4 text-[60px] w-1/4' icon={faBook} />
-                    <FontAwesomeIcon className='ml-4 text-[60px] w-1/4' icon={faBrain} />
+                    <div className='w-11/12  text-neutral-300 rounded-xl flex justify-between mx-auto items-center h-1/2'>
+                    <FontAwesomeIcon className='ml-4 text-[60px] w-[100px] ' icon={faSearch} />
+                    <FontAwesomeIcon className='ml-4 text-[60px] w-[100px]' icon={faAtlas} />
+                    <FontAwesomeIcon className='ml-4 text-[60px] w-[100px]' icon={faBook} />
+                    <FontAwesomeIcon className='ml-4 text-[60px] w-[100px]' icon={faBrain} />
                     </div>
                 </div>
                 <div className={'border-[2px] border-black cursor-pointer rounded-2xl hidden sm:block fondo-transparente-verde-boton text-neutral-100 text-center h-[80px] w-[450px] m-auto mt-20 p-3 shadow-md shadow-[#333333D9] transition-all hover:scale-110 hover:translate-y-[-10px] ' + titleFont.className}>

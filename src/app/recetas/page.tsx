@@ -59,7 +59,7 @@ const MainPage = () => {
 
     return (
         <>
-            <main className="w-screen h-screen">
+            <main className="w-screen min-h-screen">
 
                 <Pagination currentPage={currentPage} recipesPerPage={recipesPerPage} setCurrentPage={setCurrentPage} totalRecipes={recipes.length}></Pagination>
                 {loading &&

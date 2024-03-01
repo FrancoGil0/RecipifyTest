@@ -1,7 +1,7 @@
 "use client"
 import { iPaginationData } from "@/interfaces/paginationInterface"
 import 'bulma/css/bulma.css'
-import './Pagination.scss'
+import './PaginationStyles.scss'
 
 const Pagination = ({ recipesPerPage, currentPage, setCurrentPage, totalRecipes }: iPaginationData) => {
 

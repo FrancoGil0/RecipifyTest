@@ -1,7 +1,7 @@
 "use client"
 import { iPaginationData } from "@/interfaces/paginationInterface"
 import 'bulma/css/bulma.css'
-import '@/components/pagination-component/pagination.scss'
+import '@/components/pagination-component/PaginationStyles.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleLeft, faCircleRight } from "@fortawesome/free-solid-svg-icons"
 

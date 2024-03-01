@@ -51,6 +51,7 @@ const NavBar = () => {
                             {session.user.role === "ADMIN" ? <DropdownItem className='text-black h-[50px]' key="categorias"><Link as={NextLink} href={"/api/categoria"}>Crear Categoría</Link></DropdownItem> : <DropdownItem className='hidden'></DropdownItem>}
                             {session.user.role === "ADMIN" ? <DropdownItem className='text-black h-[50px]' key="reportes"><Link as={NextLink} href={"/admin"}>Panel de Administración</Link></DropdownItem> : <DropdownItem className='hidden'></DropdownItem>}
                             <DropdownItem onClick={handlePerfil} className='text-black h-[50px]' key="recetas"><Link as={NextLink} href={`/perfil/${session.user.id}`}>Mí Perfíl</Link></DropdownItem>
+                            <DropdownItem className='text-black h-[50px]' key="recetas"><Link as={NextLink} href={`/agenda/${session.user.id}`}>Mí Agenda</Link></DropdownItem>
                             {session.user.role=== "USER" ? <DropdownItem onClick={handlePerfil} className='text-black h-[50px]' key="recetas"><Link as={NextLink} href={`/premium`}>Sé Premium</Link></DropdownItem> : <DropdownItem className='hidden'></DropdownItem>}
                             <DropdownItem onClick={handleHelp} className='text-black h-[50px]' key="">Ayuda & Feedback</DropdownItem>
                         </DropdownMenu>

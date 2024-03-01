@@ -8,21 +8,53 @@ import { useEffect, useState } from "react"
 import { iUserWithRecipes } from "@/interfaces/userInterfaces"
 import { iRecipeAndRelations, iRecipeInfo } from "@/interfaces/recipeInterfaces"
 import '@/components/UserProfileComponents/loaders.css'
+import { iFavorite } from "@/interfaces/reviewsInterfaces"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 
 
 export default function userProfile() {
 
+    const { data: session, status } = useSession()
+
+    const router = useRouter()
 
     
 
 
+
+
+
+
     const paramsID = usePathname().slice(8)
     const [user, setUser] = useState({} as iUserWithRecipes)
+    const[recipeList,setRecipeList]=useState([] as iRecipeAndRelations[])
+
+    useEffect(()=>{
+        const fetchFavorites=async ()=>{
+            
+                const response = await fetch('http://localhost:3000/api/userback/favoritos/' + paramsID);
+                if (response.ok) {
+                    const data:iFavorite[] = await response.json();
+                    const recipes:iRecipeAndRelations[]=[]
+                    data.map((favorito)=>{
+                        return recipes.push(favorito.likedRecipe)
+                    }) 
+                    
+                    setRecipeList(recipes);
+                    
+                } else {
+                    console.error('Error al obtener datos del servidor:', response.status);
+                }
+            
+        }
+        fetchFavorites();
+    },[])
 
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchUser = async () => {
             try {
                 const response = await fetch('http://localhost:3000/api/userback/perfil/' + paramsID);
                 if (response.ok) {
@@ -35,8 +67,22 @@ export default function userProfile() {
                 console.error('Error al realizar la solicitud:', error);
             }
         };
-        fetchData();
-    }, [user])
+
+        fetchUser();
+
+        console.log(user)
+    }, [])
+    
+    if (status === "unauthenticated") {
+        return(
+            <div className="min-h-screen">
+                <div className="mx-auto flex flex-col rounded-lg justify-evenly items-center bg-zinc-600 text-red-500 w-[400px] h-[200px]">
+                    <p className="text-2xl text-center">No tenés acceso a esta página, por favor iniciá sesión</p>
+                    <div onClick={()=>router.push("/api/login/signin")} className="cursor-pointer text-white rounded-lg px-2 py-1 bg-green-500">Ir al LogIn</div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="min-h-screen  max-w-screen py-8">
@@ -56,8 +102,8 @@ export default function userProfile() {
 
                     <div className=" w-full h-full flex gap-x-2 lg:h-3/5">
 
-                        <RecipeList recipeList={user?.posts as iRecipeInfo[]} title="Recetas Subidas" subidas />
-                        {<RecipeList recipeList={user?.posts as iRecipeInfo[]} title="Recetas Favoritas" subidas={false} />}
+                        <RecipeList recipeList={user?.posts as iRecipeInfo[]} title="Recetas Subidas"  />
+                        <RecipeList recipeList={recipeList} title="Recetas Favoritas"/>
 
                     </div>
 

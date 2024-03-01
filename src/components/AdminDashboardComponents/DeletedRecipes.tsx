@@ -67,6 +67,13 @@ const DeletedRecipes = () => {
         })
     }
 
+    const handleCancel=()=>{
+        setConfirmationDiv({
+            visibility:false,
+            recipeId:0,
+        })
+    }
+
 
     return (
         <div className="lg:min-h-[700px]  py-12">
@@ -105,6 +112,7 @@ const DeletedRecipes = () => {
                         </tbody>
                     </table>
                     {confirmationDiv.visibility && <div className="absolute flex flex-col items-center justify-between top-[22%] left-[40%] pt-6  w-[400px] h-[300px] bg-neutral-700">
+                    <div onClick={handleCancel} className="w-fit h-fit px-2 flex justify-center items-center text-center self-end absolute text-white  top-2 right-2 cursor-pointer">X</div>
                         <div className="text-center text-2xl text-green-500 mx-auto flex items-center justify-center w-full">
                             <AlertIcon className={"h-16 w-16 animate-ping text-center"}></AlertIcon>
                         </div>

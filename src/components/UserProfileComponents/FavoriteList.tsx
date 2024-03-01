@@ -1,11 +1,35 @@
+"use client"
 // import { iRecipeInfo } from "@/interfaces/recipeInterfaces"
-import { iRecipeInfo } from "@/interfaces/recipeInterfaces"
+import { iRecipeAndRelations } from "@/interfaces/recipeInterfaces"
 import Link from "next/link"
 import { ListLoader } from "./perfilLoadingComponents"
 
 
 
-export default function RecipeList({ recipeList, title }: { recipeList:iRecipeInfo[], title: string}) {
+export default function FavoriteList({recipeList, title }: {recipeList:iRecipeAndRelations[], title: string }) {
+
+    /*
+    const[recipeList,setRecipeList]=useState([] as iRecipeAndRelations[])
+    useEffect(()=>{
+        const fetchFavorites=async ()=>{
+            
+                const response = await fetch('http://localhost:3000/api/userback/favoritos/' + paramsID);
+                if (response.ok) {
+                    const data:iFavorite[] = await response.json();
+                    const recipes:iRecipeAndRelations[]=[]
+                    data.map((favorito)=>{
+                        return recipes.push(favorito.likedRecipe)
+                    }) 
+                    
+                    setRecipeList(recipes);
+                    
+                } else {
+                    console.error('Error al obtener datos del servidor:', response.status);
+                }
+            
+        }
+        fetchFavorites();
+    },[])*/ 
 
 
     return (

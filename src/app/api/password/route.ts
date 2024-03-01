@@ -10,10 +10,10 @@ export async function POST(request: Request) {
   try {
     const body: userInfo = await request.json();
 
-  //   const bandera = !body.email || body.email==="" ? false : true
-  //   if(!bandera){
-  //     return NextResponse.json({user: null,message: "No pude dejar el campo vacio"},{status: 400})
-  // }
+    const bandera = !body.email || body.email==="" ? false : true
+    if(!bandera){
+      return NextResponse.json({user: null,message: "No pude dejar el campo vacio"},{status: 400})
+  }
   //   const bandera2 =  body.email.includes("@")
   //     if(!bandera2){
   //       return NextResponse.json({user: null,message: "El email debe tener una @"},{status: 400})

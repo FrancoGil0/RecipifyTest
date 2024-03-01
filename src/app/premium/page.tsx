@@ -36,6 +36,16 @@ export default function VistaPagar() {
     }
   };
   // const idret=1321012783
+  if (session.status === "unauthenticated") {
+    return(
+        <div className="min-h-screen">
+            <div className="mx-auto flex flex-col rounded-lg justify-evenly items-center bg-zinc-600 text-red-500 w-[400px] h-[200px]">
+                <p className="text-2xl text-center">No tenés acceso a esta página, por favor iniciá sesión</p>
+                <div onClick={()=>router.push("/api/login/signin")} className="cursor-pointer text-white rounded-lg px-2 py-1 bg-green-500">Ir al LogIn</div>
+            </div>
+        </div>
+    )
+}
   return (
     <div className='min-h-screen pb-8'>
       <div className='mx-auto mt-10  min-w-[300px] w-fit max-w-[800px] h-screen  px-8 pt-5 pb-8 rounded-xl'>
@@ -45,7 +55,7 @@ export default function VistaPagar() {
             <p className='text-[50px] text-zinc-700 '>¡Convertite en Premium!</p>
             <p className='text-3xl hyphens-auto '>Para disfrutar de todo nuestro contenido sín limites</p>
           </div>
-          <p className='text-[18px]'>Si querés saber más sobre los beneficios de tu suscripción, <Link href={"/beneficios"} className='text-sky-700'>hace click acá</Link>.</p>
+          <p className='text-[18px]'>Si querés donar de forma anónima a Recipify, <Link href={"/donar"} className='text-sky-700'>hace click acá</Link>.</p>
         </div>
 
         <div className='w-full mx-auto flex flex-col sm:flex-row p-2 gap-3 h-[350px] '>

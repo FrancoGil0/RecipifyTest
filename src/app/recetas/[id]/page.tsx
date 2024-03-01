@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 
 const Recipe = ({ params }: { params: { id: string } }) => {
 
-    const router=useRouter()
+    const router = useRouter()
     const [rating, setRating] = useState(0);
     const { data: session } = useSession()
     const [recipe, setRecipe] = useState({} as iRecipeAndRelations);
@@ -32,6 +32,7 @@ const Recipe = ({ params }: { params: { id: string } }) => {
 
     const [valoracion, setValoracion] = useState(0)
     const [favorite, setFavorite] = useState(false);
+    const [error, setError] = useState("");
 
 
     // useEffect(() => {
@@ -113,30 +114,45 @@ const Recipe = ({ params }: { params: { id: string } }) => {
         setvisibility(!visibility)
     }
 
-    const handleEliminarReceta= async ()=>{
+    const handleEliminarReceta = async () => {
         setLoadingSubmit(true);
-        const response= await  fetch("http://localhost:3000/api/userback/recetas", {
-            method:"DELETE",
-            body: JSON.stringify({id: recipe.id})
+        const response = await fetch("http://localhost:3000/api/userback/recetas", {
+            method: "DELETE",
+            body: JSON.stringify({ id: recipe.id })
         })
-        response.ok? router.push('/recetas'):router.push('/recetas/'+recipe.id)
+        response.ok ? router.push('/recetas') : router.push('/recetas/' + recipe.id)
         setLoadingSubmit(false);
     }
 
 
-    const handleFavorite = (value: boolean) => {
+    const handleFavorite = async (value: boolean) => {
 
-        axios.post("http://localhost:3000/api/favorite", {
-            // valoracion: value,
-            userID: session?.user.id,
-            recipeID: recipe.id
+        const response = await fetch("http://localhost:3000/api/favorite", {
+            method: "POST",
+            body: JSON.stringify({
+                userID: session?.user.id,
+                recipeID: recipe.id
+            })
         })
 
+        const data = await response.json()
+        if (response.status === 400) {
+            setError(data.message as string)
+        }
+
         setFavorite(value)
+
+
+
     }
 
     const handleScheduleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        setTimeout(() => {
+            handlevisibility()
+        }, 1000);
+
         const idReceta = recipe.id
         const idUser = session?.user.id
         const date = ((event.currentTarget.elements.namedItem("date") as HTMLInputElement).value);
@@ -157,7 +173,7 @@ const Recipe = ({ params }: { params: { id: string } }) => {
         });
 
         if (res.status == 200) {
-            router.push('/recetas/' +recipe.id);
+            router.push('/recetas/' + recipe.id);
         }
     };
 
@@ -165,15 +181,15 @@ const Recipe = ({ params }: { params: { id: string } }) => {
         <div className="min-h-screen min-w-screen relative py-10">
 
             {session?.user.id === recipe.authorID ? <div className='absolute top-[33%] right-[20%]'>
-            <Dropdown className='shadow-xl' placement='bottom-end'>
-                <DropdownTrigger className='cursor-pointer'>
-                    <h1 className='text-5xl'>...</h1>
-                </DropdownTrigger>
-                <DropdownMenu aria-label="Menu Actions" variant="faded">
-                    <DropdownItem className='text-black font-bold h-[50px]'><Link href={`/recetas/editar/${recipe.id}`} className='text-inherit hover:text-inherit'>Editar Receta</Link></DropdownItem>
-                    <DropdownItem onClick={handleEliminarReceta} className='text-red-500 font-bold h-[50px]'>Borrar Receta</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
+                <Dropdown className='shadow-xl' placement='bottom-end'>
+                    <DropdownTrigger className='cursor-pointer'>
+                        <h1 className='text-5xl'>...</h1>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Menu Actions" variant="faded">
+                        <DropdownItem className='text-black font-bold h-[50px]'><Link href={`/recetas/editar/${recipe.id}`} className='text-inherit hover:text-inherit'>Editar Receta</Link></DropdownItem>
+                        <DropdownItem onClick={handleEliminarReceta} className='text-red-500 font-bold h-[50px]'>Borrar Receta</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
             </div> : <></>}
 
 
@@ -203,10 +219,10 @@ const Recipe = ({ params }: { params: { id: string } }) => {
             <div className="lg:w-8/12 mx-auto bg-green-200  flex flex-col items-center  shadow-xl rounded-lg overflow-hidden px-6 pb-3 pt-6 cursor-default">
 
                 <div className="lg:h-[250px] w-full overflow-hidden  rounded-md shadow-xl">
-                    <Image src={recipe.photo} alt="recipe photo" className="object-cover w-full h-full" width={500} height={500} />
+                    <Image src={recipe.photo?recipe.photo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv5_L93Vg9zVRb16tEE6NgkwlxoxKL23IhLA&usqp=CAU"} alt="recipe photo" className="object-cover w-full h-full" width={500} height={500} />
                 </div>
 
-                <div className="flex flex-col h-[150px] w-full overflow-hidden  mt-2">
+                <div className="relative flex flex-col h-[150px] w-full overflow-hidden  mt-2">
                     <div className="flex justify-center items-center  gap-3 ">
                         <p className={`text-4xl text-center ${titleFont.className}`}>{recipe.title}</p>
                         {favorite === false ? <div onClick={() => handleFavorite(!favorite)} className="lg:w-[50px] lg:h-[50px] cursor-pointer"><StrokedStar /></div> :
@@ -215,7 +231,10 @@ const Recipe = ({ params }: { params: { id: string } }) => {
                         <div className="w-[33px] h-[33px] cursor-pointer flex" onClick={handlevisibility}>
                             <ScheduleIcon />
                         </div>
-
+                        {error!==""?<div className='text-red-500 font-bold w-[300px] flex flex-col justify-evenly rounded-lg h-[150px] bg-zinc-800 text-center px-2 py-4 absolute bottom-0'>
+                            <p>{error}</p>
+                            <div onClick={() => setError("")} className='font-bold text-center bg-green-500 text-white w-fit mx-auto rounded-lg cursor-pointer px-2 py-1'>ACEPTAR</div>
+                        </div>:<></>}
                     </div>
                     <div className="flex self-center gap-3 mt-3">
                         <p className="text-xl"><span className={` ${titleFont.className}`}>Subida por:</span> <span className="capitalize">{authorName}</span></p>

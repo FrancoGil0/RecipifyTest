@@ -1,4 +1,3 @@
-import { IUserInfo } from "@/interfaces/userInterfaces";
 import NextAuth, {AuthOptions}  from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -64,6 +63,7 @@ export const authOptions:AuthOptions={
       session.user = token as any;
       return session;
     },
+
   },
   pages:{
     signIn: "/api/login/signin"
