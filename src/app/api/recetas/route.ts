@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
 
         Host: "api.claid.ai",
 
-        Authorization: "Bearer d6fee75e6ff342e6a03779cf1594af56",
+        Authorization: "Bearer ed645d8971da49d58308a186ddc10b05",
 
     },
 

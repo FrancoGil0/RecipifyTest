@@ -114,7 +114,7 @@ import { useRouter } from "next/navigation";
         </div>
         <div className="self-center w-[250px] sm:w-[350px] h-fit">
           <label htmlFor="ingredients" className='text-teal-900 text-xl sm:text-2xl'>Lista de Ingredientes</label>
-          <textarea name="ingredients" id="ingredients" cols={30} rows={30} maxLength={300} placeholder=""
+          <textarea name="ingredients" id="ingredients" cols={30} rows={30} maxLength={3000} placeholder=""
             className="block resize-none self-center w-[250px] sm:w-[350px] h-[180px] rounded-lg text-gray-700 bg-emerald-200 p-2 outline-emerald-500 text-xl"></textarea>
           <div className="w-full h-fit bg-slate-300 rounded-2xl mt-4 p-5 ">
             <p className="italic"><span className="font-bold">Importante: </span> <br /> Los ingredientes deben estar separados por coma ",".</p>
@@ -123,7 +123,7 @@ import { useRouter } from "next/navigation";
         </div>
         <div className="self-center w-[250px] sm:w-[350px] h-fit">
           <label htmlFor="pasos" className='text-teal-900 text-xl sm:text-2xl'>Pasos a Seguir</label>
-          <textarea name="pasos" id="pasos" cols={30} rows={30} maxLength={300} placeholder=""
+          <textarea name="pasos" id="pasos" cols={30} rows={30} maxLength={3000} placeholder=""
             className="block resize-none self-center w-[250px] sm:w-[350px] h-[180px] rounded-lg text-gray-700 bg-emerald-200 p-2 outline-emerald-500 text-xl">
           </textarea>
           <div className="w-full h-fit bg-slate-300 rounded-2xl mt-4 p-5 ">

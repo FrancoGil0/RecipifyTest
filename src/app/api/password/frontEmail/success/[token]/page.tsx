@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { titleFont } from "@/app/layout";
 
 const TokenComponent = ({ params }: { params: { token: string } }) => {
   const [password, setPassword] = useState("");
@@ -38,68 +39,46 @@ const TokenComponent = ({ params }: { params: { token: string } }) => {
   };
   return (
 <>
-<div className="flex justify-center items-center h-screen">
-      <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-md mt-8 ">
-        <h2 className="text-white text-xl mb-4 font-bold ">
-          Restablecimiento de Contraseña
-        </h2>
- {error && (
-        <div className="mb-2">
-          <h1>{error}</h1>
-        </div>
-      )}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Contraseña:
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Ingrese su contraseña"
-              className="w-full border border-gray-300 p-2 rounded-md"
-             value={password}
-          onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Confirmar Contraseña:
-            </label>
-            <input
-              id="confirmPassword"
-              type="password"
-              placeholder="Confirme su contraseña"
-              className="w-full border border-gray-300 p-2 rounded-md"
-            value={repeatPassword}
-              onChange={(e) => setRepeatPassword(e.target.value)}
-            />
-          </div>
-          <div className="mb-4 flex justify-between">
-            <button
-              type="button"
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Volver Atrás
-            </button>
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Confirmar
-            </button>
-          </div>
-        </form>
-      </div>
+<div className="min-h-screen pt-24  transition-all">
+
+<div className={"bg-neutral-300 h-fit cursor-default w-[450px] py-3 flex flex-col mx-auto shadow-md rounded-lg shadow-neutral-600 " + titleFont.className}>
+  <p className="text-center text-2xl font-bold p-b   text-zync-700">Cambiá tu contraseña</p>
+  {error && (
+    <div className='text-center mb-2'>
+      <p style={{ color: "red" }}>{error}</p>
     </div>
+  )}
+  <form onSubmit={handleSubmit} className="flex flex-col text-center w-1/2 mx-auto">
+    <label htmlFor="name" className="text-xl  text-zinc-500 py-2 text-left">Nueva Contraseña</label>
+    <input
+      className="h-[35px] bg-green-100 rounded-sm px-1 outline-none placeholder:opacity-50 placeholder:font-sans"
+      type="password"
+      autoFocus
+      placeholder="Nueva Contraseña"
+      id="password"
+      name="password"
+      onChange={(e) => setPassword(e.target.value)}
+    />
+    <label htmlFor="name" className="text-xl  text-zinc-500 py-2 text-left">Repetir Contraseña</label>
+    <input
+      className="h-[35px] bg-green-100 rounded-sm px-1 outline-none placeholder:opacity-50 placeholder:font-sans flex"
+      type="password"
+      autoFocus
+      placeholder="Repite la Contraseña"
+      id="repeatPassword"
+      name="repeatPassword"
+      onChange={(e) => setRepeatPassword(e.target.value)}
+    />
+    <button type="submit" className="mt-3 text-white text-2xl py-2 px-3 mx-auto w-fit rounded-lg bg-green-500">
+      Cambiar
+    </button>
+  </form>
+</div>
+</div>
 </>
+
+
  );
 };
 
-export default TokenComponent; 
+export default TokenComponent;

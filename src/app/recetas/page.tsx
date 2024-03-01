@@ -21,13 +21,14 @@ const MainPage = () => {
 
 
     const { data: session } = useSession()
-
+    const url=process.env.TUNNEL_URL
+    const localUrl="http://localhost:3000"
 
     useEffect(() => {
 
         const fetchUsers = async () => {
 
-            const response = await fetch("http://localhost:3000/api/recetas", {
+            const response = await fetch(localUrl+"/api/recetas", {
                 method: "GET",
                 headers: {
                     authorization: `${session?.user.accessToken}`,

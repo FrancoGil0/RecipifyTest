@@ -1,5 +1,6 @@
 "use client"
 
+import { titleFont } from "@/app/layout"
 import { IUserInfo } from "@/interfaces/userInterfaces"
 import Link from "next/link"
 import { useParams } from "next/navigation"
@@ -10,20 +11,21 @@ export default function GraciasPremiumView(){
     const [userName,setUserName]=useState("")
     const params = useParams()
 
-    console.log(params.id , typeof params.id + "\n LOG DE PAGE gracias/[id]")
 
     const userID =params.id
+
+    const url=process.env.TUNNEL_URL+"/api/premium/gracias/"+userID
+
 
  
     useEffect(()=>{
 
         const setRole = async () => {
-            const response= await fetch(`http://localhost:3000/api/premium/gracias/${userID}`,{
+            const response= await fetch(url,{
             method:"GET",
         })
             if(response.ok){
                 const data:IUserInfo= await response.json();
-                console.log(data)
                 setUserName(data.name)
             }
         }
@@ -32,9 +34,14 @@ export default function GraciasPremiumView(){
 
 
     return(
-        <div className="min-h-screen bg-black">
-            <p className="text-5xl text-green-400 text-center">Gracias por tu compra {userName? userName : "Crack xD"}</p>
-            <Link href={'/recetas'}><div className="w-fit h-[40px] bg-green-400 text-center text-2xl rounded-lg mx-auto flex items-center justify-center p-3 mt-6">Ver Recetas</div></Link>
+        <div className="min-h-screen antialiased">
+            <div className="mx-auto bg-green-50 w-fit px-3 py-5 mt-10 rounded-lg shadow-md shadow-[#333]">
+            <p className={"text-5xl py-3 text-green-400 text-center "+titleFont.className}>Gracias por tu compra {userName? userName : "🤑"}</p>
+            <p className={"text-center text-bold py-5 text-[20px] "+titleFont.className}>
+            <Link href={'/'} className=" text-sky-400 hover:underline">Volvé al Inicio</Link> o <Link href={"/recetas"} className="text-sky-400 hover:underline">descubrí nuevas recetas</Link>
+            </p>
+
+            </div>
         </div>
     )
 }

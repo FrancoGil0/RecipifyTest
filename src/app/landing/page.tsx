@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { titleFont } from '../layout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightToBracket, faAtlas, faBook, faBrain, faSearch } from '@fortawesome/free-solid-svg-icons'
+import Link from 'next/link'
 
 const LandingPage = () => {
 
@@ -36,7 +37,7 @@ const LandingPage = () => {
                     </div>
                 </div>
                 <div className={'border-[2px] border-black cursor-pointer rounded-2xl hidden sm:block fondo-transparente-verde-boton text-neutral-100 text-center h-[80px] w-[450px] m-auto mt-20 p-3 shadow-md shadow-[#333333D9] transition-all hover:scale-110 hover:translate-y-[-10px] ' + titleFont.className}>
-                    <span className='text-[38px] '>Registrate Ahora</span> <FontAwesomeIcon className='ml-4 text-[39px]' icon={faArrowRightToBracket} />
+                    <span className='text-[38px] '><Link href={"/api/register"}>Registrate Ahora</Link></span> <FontAwesomeIcon className='ml-4 text-[39px]' icon={faArrowRightToBracket} />
                 </div>
             </div>
         </div>

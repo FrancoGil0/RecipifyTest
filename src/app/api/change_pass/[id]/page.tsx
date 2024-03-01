@@ -6,7 +6,8 @@ import { signOut } from "next-auth/react";
 import { titleFont } from "@/app/layout";
 const Profile = ({ params }: { params: { id: string } }) => {
   const [name, setName] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     if (params.id) {
       axios.get(`http://localhost:3000/api/userback/perfil/${params.id}`).then((res) => {
@@ -41,7 +42,8 @@ const Profile = ({ params }: { params: { id: string } }) => {
       await signOut({ callbackUrl: "/api/login/signin" })
     }
     else {
-      setError(responseAPI.message);
+      setError(true);
+      setErrorMessage(responseAPI.message);
     }
   };
   return (
@@ -50,8 +52,8 @@ const Profile = ({ params }: { params: { id: string } }) => {
       <div className={"bg-neutral-300 h-fit cursor-default w-[450px] py-3 flex flex-col mx-auto shadow-md rounded-lg shadow-neutral-600 " + titleFont.className}>
         <p className="text-center text-2xl font-bold p-b   text-zync-700">Cambiá tu contraseña</p>
         {error && (
-          <div className='mb-2'>
-            <p style={{ color: "red" }}>{error}</p>
+          <div className='mb-2 text-center'>
+            <p style={{ color: "red" }}>{errorMessage}</p>
           </div>
         )}
         <form onSubmit={handleChangePass} className="flex flex-col text-center w-1/2 mx-auto">

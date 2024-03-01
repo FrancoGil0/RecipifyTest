@@ -6,7 +6,16 @@ import { hash } from 'bcryptjs';
 
 
 class UserServices {
-   async compararPassword(password:string, repeatPassword?:string){
+
+
+  validarCampos(name:string,email:string ,password:string, repeatPassword?:string){
+    if(name=="" || email== "" ||password == "" || repeatPassword == ""){
+      return false
+    }
+    return true
+   }
+
+   compararPassword(password:string, repeatPassword?:string){
     const resultado= password == repeatPassword ? true : false
     return resultado
    }

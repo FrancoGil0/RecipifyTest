@@ -13,6 +13,7 @@ function LoginForm() {
   const pass = useRef("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { handleSubmit } = useForm()
 
   const onSubmit = async () => {
@@ -23,13 +24,20 @@ function LoginForm() {
       redirect: false,
       callbackUrl: "/",
     })
-    if (result?.ok) {
+
+    if(result?.ok){
+      setLoading(false)
       if (result.url) {
         router.push(result.url);
-      } else {
-        setError(true);
-        setLoading(false)
-      }
+     }
+    }else{
+      setLoading(false)
+      if (result) {
+        if(result.error){
+          setError(true)
+          setErrorMessage(result.error);
+        }        
+         }
     }
   }
 
@@ -44,7 +52,7 @@ function LoginForm() {
     <form action="/login"
     className='flex flex-col rounded-md gap-10 bg-green-100 w-[300px] sm:w-[425px] py-4 px-10 m-auto mt-10' 
     onSubmit={handleSubmit(onSubmit)}>
-      {error && (<p className='text-red-700 text-center'> <span className='font-bold'>Error:</span> Credenciales Incorrectas</p>)} 
+      {error && (<p className='text-red-700 text-center'> <span className='font-bold'>Error:</span>{errorMessage}</p>)} 
       {loading && 
       <div className='flex items-center justify-center'>
         <ThreeDots fill='#34D399' />

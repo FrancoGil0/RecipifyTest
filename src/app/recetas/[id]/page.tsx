@@ -35,52 +35,24 @@ const Recipe = ({ params }: { params: { id: string } }) => {
     const [error, setError] = useState("");
 
 
-    // useEffect(() => {
-    //     function favoriteCondition(){
-
-    //         let users:any[]=[]
-
-    //         recipe.favorites?.forEach((favorito)=>{
-    //             users.push(favorito.likedBy.id);
-    //         })
-
-    //             console.log(users)
-    //             const condition = users.some((element)=>{
-    //                 element === session?.user.id
-    //             })
-    //             setFavorite(condition)
-    //         }
-
-    //         favoriteCondition()
-
-    //         console.log(favorite)
-    // },[])
 
 
 
-    const handleClick = (value: number) => {
+    async function handleClick(value: number) {
         setHabilitar(true)
         setValoracion(value)
 
-        axios.get(`http://localhost:3000/api/userback/recetas/${params.id}`)
-            .then((res) => {
-                setRating(res.data.rating)
-            })
 
-
-        axios.post("http://localhost:3000/api/review", {
+        const res = await axios.post("http://localhost:3000/api/review", {
             valoracion: value,
             idUsuario: session?.user.id,
             idRecipe: recipe.id
-
         })
+        if (res.ok) {
+            router.push("/recetas/" + params.id)
+        }
+
     };
-
-
-
-
-
-
     useEffect(() => {
         if (
             params.id
@@ -92,17 +64,10 @@ const Recipe = ({ params }: { params: { id: string } }) => {
                 });
         }
     }, [valoracion, rating]);
-
-
-
-
-
-
-    const ingredients: string = recipe.ingredients as string
-
+    const ingredientes=recipe.ingredients?.split(',');
+    const pasos=recipe.pasos?.split('|');
     const author: IUserInfo = recipe.author
     const categoria: categoriasInterface = recipe.categoria
-
     const authorName: string = author ? author.name : "cargando..."
 
     const categoriaName: string = categoria ? categoria.name : "cargando..."
@@ -177,6 +142,7 @@ const Recipe = ({ params }: { params: { id: string } }) => {
         }
     };
 
+
     return (
         <div className="min-h-screen min-w-screen relative py-10">
 
@@ -216,10 +182,10 @@ const Recipe = ({ params }: { params: { id: string } }) => {
             </div>}
 
 
-            <div className="lg:w-8/12 mx-auto bg-green-200  flex flex-col items-center  shadow-xl rounded-lg overflow-hidden px-6 pb-3 pt-6 cursor-default">
+            <div className="lg:w-8/12 h-fit mx-auto bg-green-200  flex flex-col items-center  shadow-xl rounded-lg overflow-hidden px-6 pb-3 pt-6 cursor-default">
 
                 <div className="lg:h-[250px] w-full overflow-hidden  rounded-md shadow-xl">
-                    <Image src={recipe.photo?recipe.photo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv5_L93Vg9zVRb16tEE6NgkwlxoxKL23IhLA&usqp=CAU"} alt="recipe photo" className="object-cover w-full h-full" width={500} height={500} />
+                    <Image src={recipe.photo ? recipe.photo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv5_L93Vg9zVRb16tEE6NgkwlxoxKL23IhLA&usqp=CAU"} alt="recipe photo" className="object-cover w-full h-full" width={500} height={500} />
                 </div>
 
                 <div className="relative flex flex-col h-[150px] w-full overflow-hidden  mt-2">
@@ -231,15 +197,15 @@ const Recipe = ({ params }: { params: { id: string } }) => {
                         <div className="w-[33px] h-[33px] cursor-pointer flex" onClick={handlevisibility}>
                             <ScheduleIcon />
                         </div>
-                        {error!==""?<div className='text-red-500 font-bold w-[300px] flex flex-col justify-evenly rounded-lg h-[150px] bg-zinc-800 text-center px-2 py-4 absolute bottom-0'>
+                        {error !== "" ? <div className='text-red-500 font-bold w-[300px] flex flex-col justify-evenly rounded-lg h-[150px] bg-zinc-800 text-center px-2 py-4 absolute bottom-0'>
                             <p>{error}</p>
                             <div onClick={() => setError("")} className='font-bold text-center bg-green-500 text-white w-fit mx-auto rounded-lg cursor-pointer px-2 py-1'>ACEPTAR</div>
-                        </div>:<></>}
+                        </div> : <></>}
                     </div>
                     <div className="flex self-center gap-3 mt-3">
                         <p className="text-xl"><span className={` ${titleFont.className}`}>Subida por:</span> <span className="capitalize">{authorName}</span></p>
                         <p className="text-xl"><span className={` ${titleFont.className}`}>En:</span> {categoriaName}</p>
-                        <p className="text-xl"><span className={` ${titleFont.className}`}>Rating:</span> {rating}</p>
+                        <p className="text-xl"><span className={` ${titleFont.className}`}>Rating:</span> {recipe.rating}</p>
                     </div>
                     {!condition && <div className="self-center">
                         {!habilitar && (
@@ -263,19 +229,27 @@ const Recipe = ({ params }: { params: { id: string } }) => {
                     </div>}
                 </div>
 
-                <div className="w-full h-[300px]">
+                <div className="w-full h-fit py-3 pb-10">
                     <span className={`text-2xl ${titleFont.className}`}>Descripción:</span><br />
                     <p className="text-lg text-center">
                         {recipe.description}
                     </p>
                     <span className={`text-2xl ${titleFont.className}`}>Ingredientes:</span><br />
-                    <p className="text-lg text-center">
-                        {ingredients}
-                    </p>
+                    <div className="text-lg w-fit mx-auto text-left">
+                        <ul className={ingredientes?.length>5?'columns-2 mx-auto':"mx-auto"}>
+                        {ingredientes?.map((ingredient:string,index:number)=>{
+                            return <li key={index}>{ingredient}</li>
+                        })}
+                        </ul>
+                    </div>
                     <span className={`text-2xl ${titleFont.className}`}>Pasos:</span><br />
-                    <p className="text-lg text-center">
-                        {recipe.pasos}
-                    </p>
+                    <div className="text-lg text-center">
+                        <ul className={pasos?.length>5?'columns-2':""}>
+                        {pasos?.map((ingredient:string,index:number)=>{
+                            return <li className='hyphens-auto text-clip text-left' key={index}>{ingredient}</li>
+                        })}
+                        </ul>
+                    </div>
 
                 </div>
 
