@@ -1,14 +1,15 @@
-interface CopyToClipboardButtonProps {
-    url: string;
-  }
-  const CopyToClipboardButton = ({ url }: CopyToClipboardButtonProps) => {
-    const copyToClipboard = () => {
-      navigator.clipboard.writeText(url)
-        .then(() => alert('¡Enlace copiado al portapapeles!'))
-        .catch(err => console.error('Error al copiar al portapapeles: ', err));
-    };
-    return (
-      <button className="font-bold cursor-pointer" onClick={copyToClipboard}>Copiar Enlace</button>
-    );
-  };
-  export default CopyToClipboardButton; 
+// src/app/api/copyClipboard/page.tsx
+import CopyToClipboardButton from "@/components/copyToClipboard/copyToClipboardButton";
+
+const Page = () => {
+  const url = "https://example.com"; // Aquí podrías definir tu enlace predeterminado.
+  
+  return (
+    <div>
+      <h1>Copiar al portapapeles</h1>
+      <CopyToClipboardButton url={url} />
+    </div>
+  );
+};
+
+export default Page;
