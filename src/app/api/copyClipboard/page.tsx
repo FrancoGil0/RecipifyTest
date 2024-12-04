@@ -1,6 +1,6 @@
 
 
-export default function CopyToClipboardButton  ({ url }: {url:string})  {
+export default function CopyToClipboardButton  (url:string)  {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(url)
       .then(() => alert('¡Enlace copiado al portapapeles!'))
