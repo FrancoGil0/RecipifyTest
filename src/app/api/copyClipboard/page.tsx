@@ -2,7 +2,7 @@ interface CopyToClipboardButtonProps {
   url: string;
 }
 
-const CopyToClipboardButton = ({ url }: CopyToClipboardButtonProps) => {
+export default function CopyToClipboardButton  ({ url }: CopyToClipboardButtonProps)  {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(url)
       .then(() => alert('¡Enlace copiado al portapapeles!'))
@@ -14,4 +14,3 @@ const CopyToClipboardButton = ({ url }: CopyToClipboardButtonProps) => {
   );
 };
 
-export default CopyToClipboardButton; 
