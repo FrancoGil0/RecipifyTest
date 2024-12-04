@@ -1,4 +1,7 @@
 // src/app/recetas/[id]/page.tsx
+
+'use client';
+
 import { useEffect, useState } from "react";
 
 const RecipePage = ({ params }: { params: { id: string } }) => {
