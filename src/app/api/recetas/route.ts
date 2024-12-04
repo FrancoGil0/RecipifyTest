@@ -8,9 +8,9 @@ import { authOptions } from "../auth/[...nextauth]/route";
 const recipeServicio = new RecipeServices();
 
 cloudinary.config({
-  cloud_name: "dseagqpd0",
-  api_key: "989994138848722",
-  api_secret: "MCLCr24PMzwAQd0XnFi7Uy-lRFM",
+  cloud_name: "di6gfh51q",
+  api_key: "929986752331611",
+  api_secret: "u-zV3YnVo1zycMeFYEhDZcH-g_M",
 });
 
 interface ReportedID{
